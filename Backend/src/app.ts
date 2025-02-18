@@ -26,7 +26,7 @@ mongoDb();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // Add your frontend origin here
+    origin: ["https://management.matangievent.com"], // Add your frontend origin here
     methods: ["POST", "GET", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: [
