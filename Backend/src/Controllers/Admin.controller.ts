@@ -109,33 +109,6 @@ export const getAdmins: RequestHandler = async (req, res, next) => {
   }
 };
 
-// export const checkSuperAdmin: RequestHandler = async (req, res, next) => {
-//   try {
-//     const adminId = req.session.adminId;
-
-//     if (!adminId) {
-//       return next(createHttpError(401, "Unauthorized: Admin ID missing"));
-//     }
-
-//     const admin = await AdminModel.findById(adminId);
-
-//     if (!admin) {
-//       return next(createHttpError(404, "Admin not found"));
-//     }
-
-//     if (admin.role !== "SuperAdmin") {
-//       return next(
-//         createHttpError(403, "Forbidden: You do not have SuperAdmin access")
-//       );
-//     }
-
-//     // Send a success response if the admin is a SuperAdmin
-//     res.status(200).json({ message: "Access granted", admin });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 export const getAdminById: RequestHandler = async (req, res, next) => {
   const adminId = req.params.admin_id;
   try {

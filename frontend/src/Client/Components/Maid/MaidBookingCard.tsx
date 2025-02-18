@@ -33,7 +33,7 @@ const MaidBookingCard: React.FC<MaidBookingCardProps> = ({ booking }) => {
           Provider Name: {booking.providerDetail?.[0]?.name || "N/A"}
         </p>
         <p className="text-sm text-gray-600">
-          Gender: {booking.gender || "N/A"}
+          Maid Gender: {booking.gender || "N/A"}
         </p>
         <p className="text-sm text-gray-600">
           Category: {booking.category?.[0]?.name || "N/A"}
