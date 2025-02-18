@@ -126,6 +126,7 @@ const HireMaid: React.FC = () => {
             <label className="block text-gray-700">Name:</label>
             <input
               type="text"
+              required
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter name"
@@ -137,6 +138,7 @@ const HireMaid: React.FC = () => {
           <div className="mb-4">
             <label className="block text-gray-700">Gender:</label>
             <select
+            required
               value={gender}
               onChange={(e) => setGender(e.target.value)}
               className="w-full p-2 border rounded"
@@ -151,6 +153,7 @@ const HireMaid: React.FC = () => {
           <div className="mb-4">
             <label className="block text-gray-700">Subcategory:</label>
             <select
+            required
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
               className="w-full p-2 border rounded"
@@ -171,6 +174,7 @@ const HireMaid: React.FC = () => {
             <label className="block text-gray-700">Start Date:</label>
             <input
               type="date"
+              required
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               className="w-full p-2 border rounded"
