@@ -223,8 +223,7 @@ const PgProduct: React.FC = () => {
 
           if (res.message) {
             bookingData.payment_status = "Success";
-            const response = await createPgBooking(bookingData);
-            alert(`Booking Created Successfully: ${JSON.stringify(response)}`);
+            await createPgBooking(bookingData);
             alert("Payment Successful");
             navigate("/mypgbooking");
           } else {

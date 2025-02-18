@@ -113,34 +113,13 @@ const AddPg: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
-    // Create a new FormData object to append the form fields and files
-    // const formData = new FormData();
-    // formData.append('reg_id', registerId); // Assuming registerId is the user's unique identifier
-    // formData.append('name', name);
-    // formData.append('price', price.toString()); // Assuming price is a string or number value
-    // formData.append('sub_category_id', subCategory); // Assuming description is a string value
-    // formData.append('type_id', type);
-    // formData.append('address', address);
-    // formData.append('street', street);
-    // formData.append('city', city);
-    // formData.append('state', state);
-    // formData.append('country', country);
-    // formData.append('pincode', pincode.toString());
-
+    
     // Check if the first image is provided, as it's required
     if (!images.image1) {
       setError("The First Image is Required.");
       setLoading(false);
       return;
     }
-
-    // Append the images to the FormData object
-    // formData.append('image1', images.image1);
-    // if (images.image2) formData.append('image2', images.image2);
-    // if (images.image3) formData.append('image3', images.image3);
-    // if (images.image4) formData.append('image4', images.image4);
-    // if (images.image5) formData.append('image5', images.image5);
 
     try {
       const pgData = {

@@ -111,7 +111,7 @@ const HireMaid: React.FC = () => {
   }
 
   return (
-    <div className="pt-24 px-6 md:px-14 bg-white rounded shadow pb-4">
+    <div className="pt-24 md:pt-32 xl:pt-24 px-6 md:px-14 bg-white rounded shadow pb-6">
       <div className="flex justify-between bg-blue-500 border-2 border-x-black border-t-black border-b-0 rounded-t text-white p-4">
         <h1 className="text-xl font-bold mt-2">Hire Maid</h1>
         <Link to="/" className="px-4 py-2 border rounded">

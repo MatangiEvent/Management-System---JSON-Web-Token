@@ -148,7 +148,7 @@ const PgTable: React.FC<TableProps> = ({
               {deleteStatus && onDelete && (
                 <td className="border border-gray-300 px-4 py-2 text-center">
                   <button
-                    onClick={() => onDelete(String(row._id))}
+                    onClick={() => onDelete(String(row.pgId))}
                     className="px-4 py-2 bg-red-600 text-white rounded shadow hover:bg-red-500"
                     aria-label={`Delete category ${row.name}`}
                   >
