@@ -1,6 +1,5 @@
 import express from "express";
 import { changeStatus, createService, deleteService, getServiceById, getServices, updateService } from "../Controllers/Service.controller";
-// import { requireAdminAuth } from "../Middleware/AdminAuth.middleware";
 
 const router = express.Router();
 

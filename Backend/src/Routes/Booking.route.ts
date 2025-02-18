@@ -1,6 +1,5 @@
 import express from "express";
 import { createBooking, deleteBooking, getBookingById, getBookingByRegisterId, getBookings, updateBooking, updateBookingProvider, updateBookingStatusCanceled, updateBookingStatusPending } from "../Controllers/Booking.controller";
-// import { requireAdminAuth } from "../Middleware/AdminAuth.middleware";
 
 const router = express.Router();
 

@@ -1,5 +1,4 @@
 import "dotenv/config";
-import env from "./util/validateEnv";
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import registerRoutes from "./Routes/Register.route";
@@ -17,8 +16,6 @@ import contactUsRoutes from "./Routes/ContactUs.route";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 import { mongoDb } from "./Db/Database";
-import session from "express-session";
-import MongoStore from "connect-mongo";
 
 const app = express();
 
@@ -45,25 +42,6 @@ app.use(
 );
 
 app.use(express.json());
-
-app.use(
-  session({
-    name: "userSessionId", // Keep one session name
-    secret: env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    rolling: true,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-      httpOnly: true,
-      secure: true, // Set to true in production with HTTPS
-      sameSite: "none",
-    },
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_CONNECTION_STRING,
-    }),
-  })
-);
 
 app.use(morgan("dev"));
 

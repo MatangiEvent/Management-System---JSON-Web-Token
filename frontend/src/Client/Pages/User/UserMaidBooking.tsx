@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Table from "../../../Shared/Components/Table";
-import Loading from "../../../Shared/Components/Loading"; // Import the Loading component
+import Loading from "../../../Shared/Components/Loading";
 import { Booking as BookingModel } from "../../../Shared/Models/Booking.model";
 import { fetchBookingsByRegisterId } from "../../../Shared/Store/BookingAuthStore";
 import { getLoggedInUser } from "../../../Shared/Store/LoginAuthStore";
+import MaidBookingCard from "../../Components/Maid/MaidBookingCard"; // Import the new component
 
 const UserMaidBooking: React.FC = () => {
   const [bookings, setBookings] = useState<BookingModel[]>([]);
@@ -22,15 +22,15 @@ const UserMaidBooking: React.FC = () => {
 
     try {
       const maidBooking = await fetchBookingsByRegisterId(registerId);
+      console.log(maidBooking); // Debugging purpose
       if (Array.isArray(maidBooking)) {
         setBookings(maidBooking);
       } else if (maidBooking && typeof maidBooking === "object") {
-        setBookings([maidBooking]); // Wrap in an array
+        setBookings([maidBooking]);
       } else {
-        setBookings([]); // Default to an empty array
+        setBookings([]);
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
+    } catch {
       setBookings([]);
     } finally {
       setLoading(false);
@@ -39,8 +39,7 @@ const UserMaidBooking: React.FC = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if(token)
-    {
+    if (token) {
       const fetchRegisterIdAndBookings = async () => {
         try {
           setLoading(true);
@@ -58,11 +57,9 @@ const UserMaidBooking: React.FC = () => {
         }
       };
       fetchRegisterIdAndBookings();
-    }
-    else{
+    } else {
       navigate("/");
     }
-    
   }, [navigate]);
 
   if (loading) {
@@ -72,32 +69,6 @@ const UserMaidBooking: React.FC = () => {
   if (error) {
     return <div className="pt-24 text-center text-red-500">{error}</div>;
   }
-
-  const columns = [
-    "Sr No.",
-    "Booking ID",
-    "UserName",
-    "Provider Name",
-    "Male",
-    "Category",
-    "Sub Category",
-    "Start Date",
-    "Status",
-  ];
-
-  const data = bookings.map((booking, index) => ({
-    No: index + 1,
-    _id: booking._id,
-    user_id: booking.userDetail?.[0]?.name || "N/A",
-    provider_id: booking.providerDetail?.[0]?.name || "N/A",
-    male: booking.gender || "N/A",
-    category_id: booking.category?.[0]?.name || "N/A",
-    subcategory_id: booking.subcategory?.[0]?.name || "N/A",
-    startDate: booking.start_date
-      ? new Date(booking.start_date).toLocaleDateString()
-      : "N/A",
-    status: booking.status || "N/A",
-  }));
 
   return (
     <div className="bg-white pt-24 px-5 md:px-8 lg:px-14 mb-10">
@@ -117,14 +88,11 @@ const UserMaidBooking: React.FC = () => {
             </button>
           </div>
         ) : (
-          <Table
-            columns={columns}
-            data={data}
-            editHeadName="Cancel Booking"
-            editName="Cancel Booking"
-            editStatus={false}
-            deleteStatus={false}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {bookings.map((booking) => (
+              <MaidBookingCard key={booking._id} booking={booking} />
+            ))}
+          </div>
         )}
       </div>
     </div>

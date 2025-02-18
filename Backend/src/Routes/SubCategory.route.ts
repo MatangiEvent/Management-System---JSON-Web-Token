@@ -1,6 +1,5 @@
 import express from "express";
 import { createSubCategory, deleteSubCategory, getSubCategories, getSubCategoryByCategoryId, getSubCategoryById, updateSubCategory } from "../Controllers/SubCategory.controller";
-import { requireAdminAuth } from "../Middleware/AdminAuth.middleware";
 
 const router = express.Router();
 

@@ -19,7 +19,25 @@ export interface userDetail {
     updatedAt: Date;
     }
 
-    export interface profileDetail
+    export interface userProfileDetail
+    {
+        _id: string;
+        reg_id: string;
+        gender: string;
+        profile_pic: string;
+        idproof_pic: string;
+        address: string;
+        street: string;
+        city: string;
+        state: string;
+        country: string;
+        pincode: number;
+        isverified: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+    }
+
+    export interface providerProfileDetail
     {
         _id: string;
         reg_id: string;
@@ -42,9 +60,10 @@ export interface Booking {
   name: string;
   user_id: string;
   userDetail : userDetail[];
-  profileDetail : profileDetail[];
+  userProfileDetail : userProfileDetail[];
   provider_id: string;
   providerDetail : userDetail[];
+  providerProfileDetail : providerProfileDetail[];
   gender: string;
   category_id: string;
   category : Category[];

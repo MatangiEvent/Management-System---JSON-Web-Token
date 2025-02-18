@@ -1,23 +1,20 @@
 import express from "express";
-import { createAdmin, deleteAdmin, getAdminById, getAdmins, getAuthenticatedAdmin, loginAdmin, logoutAdmin, updateAdmin } from "../Controllers/Admin.controller";
-import { checkSuperAdmin } from "../Middleware/AdminAuth.middleware";
+import { createAdmin, deleteAdmin, getAdminById, getAdmins, getAuthenticatedAdmin, loginAdmin, updateAdmin } from "../Controllers/Admin.controller";
 
 const router = express.Router();
 
-router.get("/", getAuthenticatedAdmin)
+router.get("/", getAuthenticatedAdmin);
 
 router.post("/login", loginAdmin);
-
-router.post("/logout", logoutAdmin);
 
 router.get("/getall" , getAdmins );
 
 router.get("/:admin_id", getAdminById);
 
-router.post("/create",checkSuperAdmin, createAdmin);
+router.post("/create", createAdmin);
 
-router.patch<{ admin_id: string }>("/update/:admin_id", checkSuperAdmin, updateAdmin);
+router.patch<{ admin_id: string }>("/update/:admin_id", updateAdmin);
 
-router.delete("/delete/:admin_id",checkSuperAdmin, deleteAdmin);
+router.delete("/delete/:admin_id", deleteAdmin);
 
 export default router;

@@ -45,7 +45,7 @@ const MaidBooking: React.FC = () => {
       const filteredBookings = data.filter(
         (booking: BookingModel) =>
           booking.status === "Pending" &&
-          booking.profileDetail?.[0]?.state === state
+          booking.userProfileDetail?.[0]?.state === state
       );
       setBookings(filteredBookings);
     } catch (err) {
@@ -130,8 +130,8 @@ const MaidBooking: React.FC = () => {
     _id: booking._id,
     name: booking.name || "N/A",
     provider_id: booking.providerDetail?.[0]?.name || "N/A",
-    address: booking.profileDetail?.[0]
-      ? `${booking.profileDetail[0].address}, ${booking.profileDetail[0].street}, ${booking.profileDetail[0]?.city}, ${booking.profileDetail[0]?.state}, ${booking.profileDetail[0]?.country}, ${booking.profileDetail[0]?.pincode}`
+    address: booking.userProfileDetail?.[0]
+      ? `${booking.userProfileDetail[0].address}, ${booking.userProfileDetail[0].street}, ${booking.userProfileDetail[0]?.city}, ${booking.userProfileDetail[0]?.state}, ${booking.userProfileDetail[0]?.country}, ${booking.userProfileDetail[0]?.pincode}`
       : "N/A",
     male: booking.gender || "N/A",
     category: booking.category?.[0]?.name || "N/A",

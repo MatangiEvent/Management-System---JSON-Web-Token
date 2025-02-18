@@ -37,7 +37,7 @@ export const getBookings: RequestHandler = async (req, res, next) => {
           from: "users",
           let: { userId: "$user_id" },
           pipeline: [{ $match: { $expr: { $eq: ["$reg_id", "$$userId"] } } }],
-          as: "profileDetail",
+          as: "userProfileDetail",
         },
       },
       {
@@ -46,6 +46,14 @@ export const getBookings: RequestHandler = async (req, res, next) => {
           let: { providerId: "$provider_id" },
           pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$providerId"] } } }],
           as: "providerDetail",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          let: { providerId: "$provider_id" },
+          pipeline: [{ $match: { $expr: { $eq: ["$reg_id", "$$providerId"] } } }],
+          as: "providerProfileDetail",
         },
       },
     ]);
@@ -101,7 +109,7 @@ export const getBookingById: RequestHandler = async (req, res, next) => {
           from: "users",
           let: { userId: "$user_id" },
           pipeline: [{ $match: { $expr: { $eq: ["$reg_id", "$$userId"] } } }],
-          as: "profileDetail",
+          as: "userProfileDetail",
         },
       },
       {
@@ -110,6 +118,14 @@ export const getBookingById: RequestHandler = async (req, res, next) => {
           let: { providerId: "$provider_id" },
           pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$providerId"] } } }],
           as: "providerDetail",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          let: { providerId: "$provider_id" },
+          pipeline: [{ $match: { $expr: { $eq: ["$reg_id", "$$providerId"] } } }],
+          as: "providerProfileDetail",
         },
       },
     ]);
@@ -175,7 +191,7 @@ export const getBookingByRegisterId: RequestHandler = async (
           from: "users",
           let: { userId: "$user_id" },
           pipeline: [{ $match: { $expr: { $eq: ["$reg_id", "$$userId"] } } }],
-          as: "profileDetail",
+          as: "userProfileDetail",
         },
       },
       {
@@ -184,6 +200,14 @@ export const getBookingByRegisterId: RequestHandler = async (
           let: { providerId: "$provider_id" },
           pipeline: [{ $match: { $expr: { $eq: ["$_id", "$$providerId"] } } }],
           as: "providerDetail",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          let: { providerId: "$provider_id" },
+          pipeline: [{ $match: { $expr: { $eq: ["$reg_id", "$$providerId"] } } }],
+          as: "providerProfileDetail",
         },
       },
     ]);

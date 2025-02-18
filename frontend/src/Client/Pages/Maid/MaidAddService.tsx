@@ -2,84 +2,56 @@ import React, { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getLoggedInUser } from "../../../Shared/Store/LoginAuthStore";
 import { createService } from "../../../Shared/Store/ServiceAuthStore";
-import { fetchCategories } from "../../../Shared/Store/CategoryAuthStore";
 import { fetchSubCategoryByCategoryId } from "../../../Shared/Store/SubCategoryAuthStore";
 import { SubCategory } from "../../../Shared/Models/SubCategory.model";
-import { Category } from "../../../Shared/Models/Category.model";
 import Loading from "../../../Shared/Components/Loading";
 
 const AddMaidService: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [providerId, setProviderId] = useState("");
-  const [category, setCategory] = useState("");
+  const [category] = useState("67907e2f8e1c7c38055f0dc7"); // Fixed category
   const [subcategory, setSubcategory] = useState("");
   const [price, setPrice] = useState("");
   const [note, setNote] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [subcategories, setSubcategories] = useState([]);
+  const [subcategories, setSubcategories] = useState<SubCategory[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const initializeData = async () => {
       setLoading(true);
       try {
-        // Check user authentication
         const token = localStorage.getItem("token");
-        if(token){
-          console.log(token);
-          const registerId = await getLoggedInUser();
-          if (!registerId) {
-            navigate("/login");
-            return;
-          }
-  
-          if (registerId.role === "maid") {
-            setProviderId(registerId._id);
-          } else {
-            navigate("/");
-            return;
-          }
-  
-          // Load categories only if authentication is successful
-          const fetchedCategories = await fetchCategories();
-          setCategories(fetchedCategories);
-          setLoading(false);
-        }
-        else{
+        if (!token) {
           navigate("/login");
+          return;
         }
-        
+
+        const registerId = await getLoggedInUser();
+        if (!registerId || registerId.role !== "maid") {
+          navigate("/");
+          return;
+        }
+
+        setProviderId(registerId._id);
+
+        // Fetch subcategories for the fixed category
+        const fetchedSubCategories = await fetchSubCategoryByCategoryId(category);
+        setSubcategories(fetchedSubCategories || []);
+        setSubcategory("");
+
+        setLoading(false);
       } catch (error) {
-        console.error("Error during authentication or data fetching:", error);
+        console.error("Error fetching data:", error);
         setLoading(false);
         navigate("/");
       }
     };
 
     initializeData();
-  }, [navigate]);
-
-  const handleCategoryChange = async (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedCategory = e.target.value;
-    // console.log("Selected category:", selectedCategory);
-    setCategory(selectedCategory);
-
-    const selectedCategoryData = await fetchSubCategoryByCategoryId(
-      selectedCategory
-    );
-    setSubcategories(selectedCategoryData || []);
-    setSubcategory("");
-  };
+  }, [navigate, category]); // Run when `category` changes
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!category.trim()) {
-      alert("Category is required");
-      return;
-    }
 
     if (!subcategory.trim()) {
       alert("Subcategory is required");
@@ -101,13 +73,13 @@ const AddMaidService: React.FC = () => {
       });
       navigate("/services");
     } catch (error) {
-      console.error("Error saving service", error);
+      console.error("Error saving service:", error);
       alert("Failed to save the service. Please try again.");
     }
   };
 
-  if(loading){
-    return <div><Loading size={50} /></div>
+  if (loading) {
+    return <Loading size={50} />;
   }
 
   return (
@@ -121,28 +93,6 @@ const AddMaidService: React.FC = () => {
 
       <div className="pt-5 px-5 border-2 pb-6 mb-5 rounded-b border-black">
         <form onSubmit={handleSubmit}>
-          {/* Category */}
-          <div className="mb-4">
-            <label htmlFor="category" className="block text-gray-700">
-              Category:
-            </label>
-            <select
-              id="category"
-              value={category}
-              onChange={handleCategoryChange}
-              className="w-full p-2 border rounded"
-            >
-              <option value="" disabled>
-                Select a category
-              </option>
-              {categories.map((cat: Category) => (
-                <option key={cat._id} value={cat._id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
           {/* Subcategory */}
           <div className="mb-4">
             <label htmlFor="subcategory" className="block text-gray-700">
@@ -157,7 +107,7 @@ const AddMaidService: React.FC = () => {
               <option value="" disabled>
                 Select a subcategory
               </option>
-              {subcategories.map((subcat: SubCategory) => (
+              {subcategories.map((subcat) => (
                 <option key={subcat._id} value={subcat._id}>
                   {subcat.name}
                 </option>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Table from "../../../Shared/Components/Table";
 import Loading from "../../../Shared/Components/Loading";
 import { getLoggedInUser } from "../../../Shared/Store/LoginAuthStore";
 import { fetchPgBookingsByRegisterId } from "../../../Shared/Store/PgBookingAuthStore";
 import { PgBookingBody as PgBookingBodyModel } from "../../../Shared/Models/PgBooking.model";
+import PgBookingCard from "../../Components/Pg/PgBookingCard";
 
 const UserPgBooking: React.FC = () => {
   const [pgBookings, setPgBookings] = useState<PgBookingBodyModel[]>([]);
@@ -23,6 +23,7 @@ const UserPgBooking: React.FC = () => {
 
     try {
       const pgBooking = await fetchPgBookingsByRegisterId(registerId);
+      console.log(pgBooking);
       if (Array.isArray(pgBooking)) {
         setPgBookings(
           pgBooking.filter((booking) => booking.pgDetail[0].isVerified)
@@ -59,8 +60,6 @@ const UserPgBooking: React.FC = () => {
         } catch (error) {
           console.error(error);
           navigate("/");
-        } finally {
-          setLoading(false);
         }
       };
       fetchRegisterIdAndBookings();
@@ -98,46 +97,19 @@ const UserPgBooking: React.FC = () => {
     );
   }
 
-  const columns = [
-    "Sr No.",
-    "Pg Booking ID",
-    "Pg Owner",
-    "Address",
-    "Price",
-    "Gender",
-    "Start Date",
-    "Status",
-    "Payment Status",
-  ];
-
-  const data = pgBookings.map((pgBooking, index) => ({
-    No: index + 1,
-    _id: pgBooking._id,
-    provider_id: pgBooking.pgOwnerDetail?.[0]?.name || "N/A",
-    address: `${pgBooking.pgDetail?.[0]?.address}, ${pgBooking.pgDetail?.[0]?.street}, ${pgBooking.pgDetail?.[0]?.city}, ${pgBooking.pgDetail?.[0]?.state}, ${pgBooking.pgDetail?.[0]?.country}`,
-    price: pgBooking.pgDetail?.[0]?.price || "N/A",
-    gender: pgBooking.gender || "N/A",
-    startDate: pgBooking.start_date
-      ? new Date(pgBooking.start_date).toLocaleDateString()
-      : "N/A",
-    status: pgBooking.status || "N/A",
-    paymentStatus: pgBooking.payment_status || "N/A",
-  }));
-
   return (
     <div className="bg-white pt-24 px-5 md:px-8 lg:px-14 mb-10">
       <div className="w-full">
         <div className="flex justify-between items-center border-b pb-4 mb-4">
           <h2 className="text-2xl font-bold text-blue-500">Pg Booking</h2>
         </div>
-        <Table
-          columns={columns}
-          data={data}
-          editHeadName="Cancel Booking"
-          editName="Cancel Booking"
-          editStatus={false}
-          deleteStatus={false}
-        />
+
+        {/* Card Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {pgBookings.map((pgBooking) => (
+            <PgBookingCard key={pgBooking._id} pgBooking={pgBooking} />
+          ))}
+        </div>
       </div>
     </div>
   );

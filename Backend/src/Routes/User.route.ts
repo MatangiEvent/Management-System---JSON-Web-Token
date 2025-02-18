@@ -1,6 +1,5 @@
 import express from "express";
 import { createUser, deleteUser, getUserById, getUsers, updateStatus, updateUser } from "../Controllers/User.controller";
-import { requireAdminAuth } from "../Middleware/AdminAuth.middleware";
 import upload from '../Config/Multer.config';
 import UserModel from '../Models/User.model'; // Assuming this is your user schema
 import createHttpError from 'http-errors';
@@ -20,7 +19,7 @@ router.post("/create", upload.fields([
 
 router.patch("/update/:user_id", updateUser);
 
-router.delete("/delete/:user_id",requireAdminAuth, deleteUser);
+router.delete("/delete/:user_id", deleteUser);
 
 
 // Update profile with file upload
@@ -28,7 +27,6 @@ router.post('/update-profile', upload.fields([
   { name: 'profile_pic', maxCount: 1 },
   { name: 'idproof_pic', maxCount: 1 },
 ]), async (req, res, next) => {
-    const user_id = req.session.userId;
   const {
     reg_id,
     gender,
@@ -53,7 +51,7 @@ router.post('/update-profile', upload.fields([
     const idProofUrl = files.idproof_pic[0].path;
 
     const updatedUser = await UserModel.findOneAndUpdate(
-      { reg_id : user_id },
+      { reg_id : reg_id },
       {
         reg_id,
         gender,

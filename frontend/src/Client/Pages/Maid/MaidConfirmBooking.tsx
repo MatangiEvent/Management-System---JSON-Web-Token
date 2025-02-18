@@ -124,8 +124,8 @@ const MaidConfirmBooking: React.FC = () => {
     No: index + 1,
     _id: booking._id,
     user_id: booking.name || "N/A",
-    address: booking.profileDetail?.[0]
-      ? `${booking.profileDetail[0].address}, ${booking.profileDetail[0].street}, ${booking.profileDetail[0]?.city}, ${booking.profileDetail[0]?.state}, ${booking.profileDetail[0]?.country}, ${booking.profileDetail[0]?.pincode}`
+    address: booking.userProfileDetail?.[0]
+      ? `${booking.userProfileDetail[0].address}, ${booking.userProfileDetail[0].street}, ${booking.userProfileDetail[0]?.city}, ${booking.userProfileDetail[0]?.state}, ${booking.userProfileDetail[0]?.country}, ${booking.userProfileDetail[0]?.pincode}`
       : "N/A",
     provider_id: booking.providerDetail?.[0]?.name || "N/A",
     male: booking.gender || "N/A",
