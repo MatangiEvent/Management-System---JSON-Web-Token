@@ -26,9 +26,9 @@ const Header: React.FC = () => {
     const token = localStorage.getItem("token");
     if(token)
     {
-      async function fetchLoggedInUser(token: string) {
+      async function fetchLoggedInUser() {
         try {
-          const user = await getLoggedInUser(token);
+          const user = await getLoggedInUser();
           setUserData(user);
           setAvtarData({ name: user.name });
   
@@ -50,7 +50,7 @@ const Header: React.FC = () => {
           console.error("User Not Logged In");
         }
 
-      }fetchLoggedInUser(token);
+      }fetchLoggedInUser();
     }
     else{
       navigate("/");
