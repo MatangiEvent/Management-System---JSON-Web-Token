@@ -7,6 +7,7 @@ import Loading from "../../../Shared/Components/Loading";
 import { createPg } from "../../../Shared/Store/PgAuthStore";
 import { SubCategory as SubCategoryModel } from "../../../Shared/Models/SubCategory.model";
 import { fetchSubCategoryByCategoryId } from "../../../Shared/Store/SubCategoryAuthStore";
+import { fetchProfileByRegisterId } from "../../../Shared/Store/ProfileAuthStore";
 
 const AddPg: React.FC = () => {
   const [name, setName] = useState("");
@@ -55,22 +56,36 @@ const AddPg: React.FC = () => {
   const checkUserAuthentication = async () => {
     try {
       const token = localStorage.getItem("token");
-      if(token)
-      {
+      if (token) {
         const register = await getLoggedInUser();
         if (!register) {
           navigate("/login");
         }
         if (register.role === "pgOwner") {
           setRegisterId(register._id);
+          try {
+            const checkUserProfile = await fetchProfileByRegisterId(
+              register._id
+            );
+            console.log("User Profile:", checkUserProfile.status);
+            if (checkUserProfile.status === 404) {
+              alert("User not found. Please complete your profile.");
+              navigate("/profile"); // Navigate to the profile page
+              return;
+            }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          } catch (error) {
+            alert("Please Complete Profile First");
+            navigate("/profile"); // Navigate to the profile page
+            return;
+          }
         } else {
           navigate("/");
         }
-      }
-      else{
+      } else {
         navigate("/");
       }
-      
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       navigate("/login");
@@ -113,7 +128,7 @@ const AddPg: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     // Check if the first image is provided, as it's required
     if (!images.image1) {
       setError("The First Image is Required.");
