@@ -28,14 +28,6 @@ const AboutUsArea: React.FC = () => {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 1 }}
               />
-              <div className="absolute top-8 left-8 bg-white bg-opacity-20 p-4 rounded-lg text-center">
-                <h1 className="text-3xl font-bold text-white">
-                  10<span className="text-orange-500">+</span>
-                </h1>
-                <h6 className="text-lg text-white">
-                  Successful <br /> Years
-                </h6>
-              </div>
             </motion.div>
 
             <div className="relative mt-6 flex space-x-4">

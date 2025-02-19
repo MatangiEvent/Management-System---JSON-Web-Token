@@ -9,7 +9,7 @@ const AboutUs: React.FC = () => {
           Transforming the Way You Find <span className="text-blue-500">Maid Services</span> & <span className="text-teal-500">PG Rentals</span>
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed mb-8 animate-fade-in-up delay-100">
-          Welcome to <span className="font-semibold text-blue-500">Matangi Event</span>—a platform designed to simplify the search for reliable **maids** and **PG accommodations** in your city. Whether you are a busy professional, a student, or a family in need of trustworthy domestic help or a comfortable place to stay, we've got you covered!
+          Welcome to <span className="font-semibold text-blue-500">Matangi Event</span> — a platform designed to simplify the search for reliable <span className="font-bold">maids</span> and <span className="font-bold">PG accommodations</span> in your city. Whether you are a busy professional, a student, or a family in need of trustworthy domestic help or a comfortable place to stay, we've got you covered!
         </p>
       </div>
       
@@ -19,7 +19,7 @@ const AboutUs: React.FC = () => {
           <img src="/images/why-choose-us/image-1.jpg" alt="Maid Service" className="w-32 h-32 mb-4 rounded-full object-cover border-4 border-blue-200 hover:border-blue-500 transition-all duration-300" />
           <h2 className="text-2xl font-bold text-blue-500 mb-4">Maid Hiring Simplified</h2>
           <p className="text-gray-600">
-            Say goodbye to unreliable services! Our vetted and professional maids are available at your convenience. Choose from a variety of services including **cleaning, cooking, babysitting, elderly care**, and more!
+            Say goodbye to unreliable services! Our vetted and professional maids are available at your convenience. Choose from a variety of services including <span className="font-bold">cleaning, cooking, babysitting, elderly care</span>, and more!
           </p>
         </div>
         
@@ -28,7 +28,7 @@ const AboutUs: React.FC = () => {
           <img src="/images/Pg/image.png" alt="PG Rental" className="w-32 h-32 mb-4 rounded-full object-cover border-4 border-teal-200 hover:border-teal-500 transition-all duration-300" />
           <h2 className="text-2xl font-bold text-teal-500 mb-4">PG Rentals Made Easy</h2>
           <p className="text-gray-600">
-            Finding the right **PG accommodation** has never been easier. Whether you’re a student, working professional, or traveler, we connect you with the best and most affordable PGs tailored to your needs.
+            Finding the right <span className="font-bold">PG accommodation</span> has never been easier. Whether you’re a student, working professional, or traveler, we connect you with the best and most affordable PGs tailored to your needs.
           </p>
         </div>
       </div>
@@ -37,7 +37,7 @@ const AboutUs: React.FC = () => {
       <div className="max-w-5xl text-center mt-12 animate-fade-in-up delay-200">
         <h2 className="text-3xl font-bold text-gray-800">Why Choose Us?</h2>
         <p className="text-gray-600 mt-4 mb-8">
-          We bring you the most **trusted, verified, and affordable** maid services and PG accommodations under one roof. Experience a seamless, hassle-free, and transparent booking process today!
+          We bring you the most <span className="font-bold">trusted, verified, and affordable</span> maid services and PG accommodations under one roof. Experience a seamless, hassle-free, and transparent booking process today!
         </p>
       </div>
       
