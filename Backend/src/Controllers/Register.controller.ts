@@ -58,58 +58,48 @@ export const loginUser: RequestHandler<
   LoginBody,
   unknown
 > = async (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
 
   try {
-    
-    res.status(200).json({ message: "User find successfully" });
+    if (!email || !password) {
+      throw createHttpError(400, "Please provide all details");
+    } else {
+      const existingRegister = await RegisterModel.findOne({ email: email })
+        .select("+password +email")
+        .exec();
+      if (!existingRegister) {
+        throw createHttpError(401, "Invalid Credentials");
+      } else {
+        const isPasswordValid = await bcrypt.compare(
+          password,
+          existingRegister.password
+        );
+        if (!isPasswordValid) {
+          throw createHttpError(400, "Invalid Credentials");
+        } else {
+          const token = await jwt.sign(
+            {
+              userId: existingRegister._id,
+            },
+            validateEnv.JWT_SECRET
+          );
+
+          if (!token) {
+            res.status(401).json({ message: "Token creation failed" });
+            return;
+          }
+
+          res.status(200).json({
+            message: "User find successfully",
+            token,
+          });
+        }
+      }
+    }
   } catch (error) {
     next(error);
   }
-
-
-
-  // const email = req.body.email;
-  // const password = req.body.password;
-
-  // try {
-  //   if (!email || !password) {
-  //     throw createHttpError(400, "Please provide all details");
-  //   } else {
-  //     const existingRegister = await RegisterModel.findOne({ email: email })
-  //       .select("+password +email")
-  //       .exec();
-  //     if (!existingRegister) {
-  //       throw createHttpError(401, "Invalid Credentials");
-  //     } else {
-  //       const isPasswordValid = await bcrypt.compare(
-  //         password,
-  //         existingRegister.password
-  //       );
-  //       if (!isPasswordValid) {
-  //         throw createHttpError(400, "Invalid Credentials");
-  //       } else {
-  //         const token = await jwt.sign(
-  //           {
-  //             userId: existingRegister._id,
-  //           },
-  //           validateEnv.JWT_SECRET
-  //         );
-
-  //         if (!token) {
-  //           res.status(401).json({ message: "Token creation failed" });
-  //           return;
-  //         }
-
-  //         res.status(200).json({
-  //           message: "User find successfully",
-  //           token,
-  //         });
-  //       }
-  //     }
-  //   }
-  // } catch (error) {
-  //   next(error);
-  // }
 };
 
 // Logout User
