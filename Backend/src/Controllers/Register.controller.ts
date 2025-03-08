@@ -58,6 +58,16 @@ export const loginUser: RequestHandler<
   LoginBody,
   unknown
 > = async (req, res, next) => {
+
+  try {
+    
+    res.status(200).json({ message: "User find successfully" });
+  } catch (error) {
+    next(error);
+  }
+
+
+
   // const email = req.body.email;
   // const password = req.body.password;
 
