@@ -45,29 +45,29 @@ app.use(express.json());
 
 app.use(morgan("dev"));
 
-app.use("/api/register", registerRoutes);
+// app.use("/api/register", registerRoutes);
 
-app.use("/api/user", userRoutes);
+// app.use("/api/user", userRoutes);
 
-app.use("/api/category", categoryRoutes);
+// app.use("/api/category", categoryRoutes);
 
-app.use("/api/subcategory", subCategoryRoutes);
+// app.use("/api/subcategory", subCategoryRoutes);
 
-app.use("/api/booking", bookingRoutes);
+// app.use("/api/booking", bookingRoutes);
 
-app.use("/api/pgbooking", pgBookingRoutes);
+// app.use("/api/pgbooking", pgBookingRoutes);
 
-app.use("/api/service", serviceRoutes);
+// app.use("/api/service", serviceRoutes);
 
-app.use("/api/pgtype", pgTypeRoutes);
+// app.use("/api/pgtype", pgTypeRoutes);
 
-app.use("/api/pg", pgRoutes);
+// app.use("/api/pg", pgRoutes);
 
-app.use("/api/admin", adminRoutes);
+// app.use("/api/admin", adminRoutes);
 
-app.use("/api/pgpayment", pgPaymentRoutes);
+// app.use("/api/pgpayment", pgPaymentRoutes);
 
-app.use("/api/contactus", contactUsRoutes);
+// app.use("/api/contactus", contactUsRoutes);
 
 app.use((req, res, next) => {
   next(createHttpError(404, "EndPoint Not Found"));
